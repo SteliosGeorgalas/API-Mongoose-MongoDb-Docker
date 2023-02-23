@@ -45,12 +45,26 @@ userController.createUser = async (req, res) => {
 
 userController.updateUser = async (req, res) => {
     try {
-        if (req.file){
+        if (req.file) {
             const photo = req.file.filename;
             req.body.photo = photo
         }
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        res.status(201).send({ success: true, message: "User Succesfully Updated" , data: user});
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.status(201).send({ success: true, message: "User Succesfully Updated", data: user });
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({ success: false, error: error.message });
+    }
+};
+
+userController.updateUserByEmail = async (req, res) => {
+    try {
+        if (req.file) {
+            const photo = req.file.filename;
+            req.body.photo = photo
+        }
+        const user = await User.findOneAndUpdate({ email: req.params.email },req.body , { new: true });
+        res.status(201).send({ success: true, message: "User Succesfully Updated", data: user });
     } catch (error) {
         console.log(error)
         res.status(400).send({ success: false, error: error.message });

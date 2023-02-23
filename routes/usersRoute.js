@@ -5,7 +5,8 @@ const fileUpload = require('../middleware/img-upload')
 const userController = require('../controllers/userController');
 
 
-router.get('/email', userController.getUserByEmail);
+router.get('/email', userController.getUserByEmail)
+    .put('/email/:email', fileUpload,userController.updateUserByEmail);
 
 router.post('', fileUpload, userController.createUser)
     .get('', userController.getUsers)
